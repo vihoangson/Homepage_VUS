@@ -20,6 +20,7 @@ switch ($this->uri->segment(3)) {
 		# code...
 		break;
 }
+echo "kitten 123";
  ?>
 	<div class="row">
       <div class="col-md-9 col-md-offset-3">

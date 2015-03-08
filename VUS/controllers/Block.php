@@ -12,7 +12,7 @@ class Block extends CI_Controller {
 		$this->db->order_by("id","desc");
 		$this->db->limit($this->config->item("per_page"),$page);
 		$this->db->where("image<>","");
-		$this->db->where("active",1);
+		$this->db->where("active",0);
 		$data["data_page"]=$this->db->get("baiviet")->result();		
 
 		$config['base_url'] = base_url()."block/index/";

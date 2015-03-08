@@ -198,7 +198,7 @@ class GetLink
 				echo "<h4>Trùng align</h4>";
 				return;
 			}
-			if(mysql_query("insert into baiviet(id,title,align_title,image,readmore,content,cid,type_content,time_create) values(null,'".$title."','".$align_title."','".$img."','".$readmore."','".$content."',".$cid.",'ifact',".time().")
+			if(mysql_query("insert into baiviet(id,title,align_title,image,readmore,content,cid,type_content,time_create,local_img) values(null,'".$title."','".$align_title."','".$img."','".$readmore."','".$content."',".$cid.",'ifact',".time().",'')
 				"))
 				echo "<b>Saved</b>";
 			else

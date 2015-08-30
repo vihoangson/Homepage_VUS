@@ -10,7 +10,7 @@ class Updategetlink
 	);	
 	function __construct()
 	{
-				
+		$CI =& get_instance();
 	}
 	/*
 	 * @namefunction: update_align_title
@@ -67,12 +67,12 @@ class Updategetlink
 			}
 		}	
 	
-/*				
- * @namefunction: get_first_img_once
- * @todo: 
- * @input: 
- * @output: 
- */			
+	/*				
+		* @namefunction: get_first_img_once
+		* @todo: 
+		* @input: 
+		* @output: 
+	*/			
 		private function get_first_img_once($content,$attr="src"){
 			if($this->get_img_option["selector"]){
 			}else{

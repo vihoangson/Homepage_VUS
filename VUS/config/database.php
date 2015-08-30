@@ -64,12 +64,12 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> '',
+	'dsn'		=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => '123456',
-	'database' => 'page_vus',
-	'dbdriver' => 'mysql',
+	'password' => '',
+	'database' => 'vus.vn',
+	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => TRUE,

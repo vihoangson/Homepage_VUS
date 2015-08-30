@@ -14,10 +14,10 @@ class Block extends CI_Controller {
 		$this->db->where("image<>","");
 		$this->db->where("active",0);
 		$data["data_page"]=$this->db->get("baiviet")->result();		
-
-		$config['base_url'] = base_url()."block/index/";
+		
+		$config['base_url']   = base_url()."block/index/";
 		$config['total_rows'] = $this->get_all_row_block();
-		$config['per_page'] = $this->config->item("per_page");
+		$config['per_page']   = $this->config->item("per_page");
 		$this->pagination->initialize($config);
 		$data["pagination"]= $this->pagination->create_links();
 		$this->load->view('base/header');

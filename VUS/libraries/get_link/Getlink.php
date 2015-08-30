@@ -29,7 +29,7 @@ class GetLink
 
 	function __construct()
 	{
-
+		$CI =& get_instance();
 		# code...
 	}
 		public function lay_baiviet($var=""){
@@ -104,8 +104,8 @@ class GetLink
 				$this->type_news="dantri";
 				$this->selector_getlink=array(
 					"link_page"=>".mr1 h2 a",
-					"title"=>".detail-title",
-					"content"=>".detail-content",
+					"title"=>"h1.fon31.mgb15",
+					"content"=>".fl.wid470",
 				);		
 			break;
 		}
@@ -124,8 +124,8 @@ class GetLink
 				
 					foreach ($list_url as $key => $value) {						
 					echo "<h1>Link new11: <br>Cid:".$key ." <br>Link: ".$value."</h1>";
-					$k=3;
-					$km=5;
+					$k=1;
+					$km=2;
 					$plus_link="";
 					if($this->type_news=="dantri"){
 						$plus_link=".htm";
@@ -183,7 +183,7 @@ class GetLink
 				$content= trim(($link2->innertext)) ;
 				break;
 			}
-			if(!$title || !$content) {echo "<h3>no data</h3>"; return;}
+			if(!isset($title) || !isset($content)) {echo "<h3>no data</h3>"; return;}
 			$readmore=trim(strip_tags($content));
 			$html->clear();
 			//$img=$this->get_first_img_once($content,"src");
@@ -198,8 +198,8 @@ class GetLink
 				echo "<h4>Trùng align</h4>";
 				return;
 			}
-			if(mysql_query("insert into baiviet(id,title,align_title,image,readmore,content,cid,type_content,time_create,local_img) values(null,'".$title."','".$align_title."','".$img."','".$readmore."','".$content."',".$cid.",'ifact',".time().",'')
-				"))
+			$sql = "insert into baiviet(id,title,align_title,image,readmore,content,cid,type_content,time_create,local_img) values(null,'".$title."','".$align_title."','".$img."','".$readmore."','".$content."',".$cid.",'ifact',".time().",'')";
+			if($CI->db->query($sql))
 				echo "<b>Saved</b>";
 			else
 				echo "<b>Error</b>";

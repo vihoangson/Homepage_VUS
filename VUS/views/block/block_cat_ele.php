@@ -28,7 +28,6 @@ if($this->session->user=="son"){
 				<?php								
 				
 			}
-
 		}
 		?>
 </a>

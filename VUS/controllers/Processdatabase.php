@@ -1,9 +1,24 @@
 <?php 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+// function __construct()
+// function index()
+// function rebuild_time_create()
+// function update_content()
+// function get_link()
+// function view_status()
+// function repair_data()
+// function get_first_img($flag=true)
+// function download_resize_img()
+// function rebuild_align_title()
+// function rebuild_readmore()
+// function show_controller()
+// function resize_img_custom($size=200)
+
 class Processdatabase extends CI_Controller {
 	function __construct() {
 		parent::__construct();
+		$this->load->library('get_content/get_content');
 	}
 
 	function index(){
@@ -13,10 +28,109 @@ class Processdatabase extends CI_Controller {
 			<p><a href="<?php echo base_url("index.php/ProcessDataBase/".$value."") ?>"><?php echo $value; ?></a></p>
 			<?php
 		}
-		?>    	
-				
-		<?php
 	}
+
+	function get_content_few_website(){
+		$data = $this->prepare_data();
+		foreach ($data as $key => $value) {
+			$object = array(
+				"title" => $value["title"],
+				"readmore" => $value["compact"],
+				"content" => $value["content"],
+				);
+			$this->db->insert('baiviet_1', $object);
+		}
+	}
+
+	function get_content_detail($link){
+
+		//$this->db->query("TRUNCATE baiviet_1");
+		$html = $this->get_content->curl_get($link);
+		$dom_string = str_get_html($html);
+		try {
+			$return["title"] = $dom_string->find("h1.title",0);
+			$return["compact"] = $dom_string->find("h2.sapo",0);
+			$return["content"] = $dom_string->find(".content ",0);
+		} catch (Exception $e) {
+		}
+		//$dom_string->clear();
+		return $return;
+	}
+
+
+
+	function prepare_data(){
+		//Nếu trong table baivie_tam khong có thì lấy về
+		if($this->db->get('baiviet_tam')->num_rows()==0){
+			$this->get_contet_website_save_to_db("http://kenh14.vn/la-cool/trang-{d}.chn");
+			$this->get_contet_website_save_to_db("http://dantri.com.vn/chuyen-la/trang-{d}.htm");
+			echo $this->db->get('baiviet_tam')->num_rows();
+			die;
+		}
+		echo "<h1>Tổng số dòng của bảng baiviet_tam: ". $this->db->get('baiviet_tam')->num_rows()."</h1>";
+		$debug_mod=false;
+		if($debug_mod){//Lấy dữ liệu sẵn
+			$links_ele = json_decode($this->config->config["db_link"],true);
+		}else{
+			//Lấy tất cả link trong cột content
+			$links_ele = $this->get_main_article();
+		}
+		$data=array();
+		$links_ele = array_values($links_ele);
+		$s= microtime();
+		foreach ($links_ele as $key => $value) {
+			$data[] = $this->get_content_detail($value);
+			if($key > 5){
+				break;
+			}
+		}
+		file_put_contents(FCPATH."/assets/data_".time().".data", json_encode($data));
+		$e= microtime();
+		echo "<h1>Time_process: ".$e-$s."</h1>";
+		return $data;
+	}	
+	/**
+	 * Lấy dữ liệu các trang chính đổ vào csdl
+	 * http://dantri.com.vn/chuyen-la/trang-".$i.".htm
+	 * 
+	 * @return void
+	 * @author 
+	 **/
+	function get_contet_website_save_to_db($link_cat=""){
+		if(!$link_cat) return;
+		for($i=1;$i<2;$i++){
+			$l = str_replace("{d}",$i,$link_cat);
+			$string = $this->get_content->curl_get($l);
+			$object= array(
+				"content" => $string,
+				);
+			$this->db->insert('baiviet_tam', $object);
+		}
+	}
+
+	function get_main_article(){
+		$array_row = $this->db->get('baiviet_tam', 1)->result_array();
+		foreach ($array_row as $key => $value) {
+			$links = str_get_html($value["content"])->find("a[href^='/chuyen-la']");
+			foreach ($links as $key2 => $value2) {
+				if(!preg_match("/\/trang-\d|\/chuyen-la\.htm|\/chuyen-la\.rss/", $value2)){
+					$link_array[] = preg_replace("/#(.+)$/","","http://dantri.com.vn".$value2->href);
+				}
+			}
+
+			$links = str_get_html($value["content"])->find(".content_news h2>a");
+			foreach ($links as $key2 => $value2) {
+				if(preg_match("/^\/la-cool\//", $value2->href)){
+					$link_array[] = preg_replace("/#(.+)$/","","http://kenh14.vn".$value2->href);
+				}
+			}
+		}
+		$link_array = array_values(array_unique($link_array));
+		return (($link_array));
+	}
+
+
+
 	function rebuild_time_create(){
 		$this->db->order_by("id","desc");
 		$this->db->where("time_create","");
@@ -31,10 +145,12 @@ class Processdatabase extends CI_Controller {
 					$this->db->query($sql);	    	
 		} 
 	}
+
 	function update_content(){
 		$this->load->library('get_link/updategetlink');				
 		$this->updategetlink->update_content();		
 	}
+
 	function get_link(){
 		$this->load->library('get_link/getlink');
 		$this->load->view("base/header");		
@@ -84,6 +200,7 @@ class Processdatabase extends CI_Controller {
 		
 		$this->load->view("base/footer");
 	}
+
 	function view_status(){
 		$this->load->library('get_link/optiongetlink');
 		$this->optiongetlink->view_status();		

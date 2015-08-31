@@ -30,6 +30,25 @@ class Processdatabase extends CI_Controller {
 		}
 	}
 
+	function getvui1(){
+		$link = "https://vui1.net/trending?page={d}";
+
+
+		for($i=1;$i<30;$i++){
+			$l = str_replace("{d}",$i,$link);
+
+			$html = $this->get_content->curl_get($l);
+			$dom_string = str_get_html($html);
+			foreach ($dom_string->find(".img-wrap img") as $key => $value) {
+				$src[] = $value->src;
+
+			}			
+		}
+
+		dd($src);
+		die;
+	}
+
 	function get_content_few_website(){
 		$data = $this->prepare_data();
 		foreach ($data as $key => $value) {
@@ -53,7 +72,7 @@ class Processdatabase extends CI_Controller {
 			$return["content"] = $dom_string->find(".content ",0);
 		} catch (Exception $e) {
 		}
-		//$dom_string->clear();
+		$dom_string->clear();
 		return $return;
 	}
 
@@ -80,7 +99,7 @@ class Processdatabase extends CI_Controller {
 		$s= microtime();
 		foreach ($links_ele as $key => $value) {
 			$data[] = $this->get_content_detail($value);
-			if($key > 5){
+			if($key > 1){
 				break;
 			}
 		}

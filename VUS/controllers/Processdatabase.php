@@ -30,25 +30,6 @@ class Processdatabase extends CI_Controller {
 		}
 	}
 
-	function getvui1(){
-		$link = "https://vui1.net/trending?page={d}";
-
-
-		for($i=1;$i<30;$i++){
-			$l = str_replace("{d}",$i,$link);
-
-			$html = $this->get_content->curl_get($l);
-			$dom_string = str_get_html($html);
-			foreach ($dom_string->find(".img-wrap img") as $key => $value) {
-				$src[] = $value->src;
-
-			}			
-		}
-
-		dd($src);
-		die;
-	}
-
 	function get_content_few_website(){
 		$data = $this->prepare_data();
 		foreach ($data as $key => $value) {

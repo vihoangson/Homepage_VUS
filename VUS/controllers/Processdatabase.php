@@ -43,7 +43,7 @@ class Processdatabase extends CI_Controller {
 	}
 
 	function get_content_detail($link){
-
+ 
 		//$this->db->query("TRUNCATE baiviet_1");
 		$html = $this->get_content->curl_get($link);
 		$dom_string = str_get_html($html);

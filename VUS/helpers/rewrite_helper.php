@@ -169,8 +169,9 @@
 		
 	    );
 	  
-		$str = strtr($str, $str_convert);
-		$str= ereg_replace("[^[:alnum:]+ \-]"," ",$str);
+		$str = trim(strtr($str, $str_convert));
+		//$str= ereg_replace("[^[:alnum:]+ \-]"," ",$str);
+		$str= preg_replace ("/[^[:alnum:]+ \-]/"," ",$str);
 
 		
 		$array_key=array("UNION","OUTFILE","SELECT","ALTER","INSERT","DROP","FROM","WHERE","UPDATE");
@@ -178,7 +179,7 @@
 			$str=str_replace($value, "", $str);
 		}
 
-		return ''.eregi_replace(" +", "-",$str);
+		return ''.preg_replace("/ +/", "-",$str);
 
 	}	
 

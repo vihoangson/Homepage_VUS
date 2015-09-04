@@ -10,6 +10,7 @@
 <hr>
 	<div class="row video_home">
 		<?php
+			$this->db->order_by('RAND()');
 			$array_video = $this->db->get('videos',20)->result_array();
 			foreach ($array_video as $key => $value) {
 				$this->load->view('block/block_ele_video',$value);

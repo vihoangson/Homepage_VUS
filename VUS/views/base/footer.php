@@ -76,6 +76,16 @@
     $('.carousel').carousel({
         interval: 5000 //changes the speed
     })
-    </script>
+<?php
+	 if ($this->agent->is_mobile()){
+		?>
+		$(".video_youtube").height($(window).height()-150);
+		$(window).resize(function() {
+			$(".video_youtube").height($(window).height()-150);
+		});
+		<?php
+	}
+ ?>
+</script>
 	</body>
 </html>

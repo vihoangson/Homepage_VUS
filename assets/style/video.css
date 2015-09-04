@@ -1,0 +1,25 @@
+.ele_video h3 {
+	font-size: 96%;
+	height: 49px;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	line-height: normal;
+	font-weight: bold;
+}
+
+.ele_video span {
+	font-size: 10px;
+	font-weight: bold;
+	display: block;
+	text-align: right;
+	display: none;
+}
+
+.ele_video {
+	margin-bottom: 13px;
+}
+
+.ele_video img {
+	width: 100%;
+}

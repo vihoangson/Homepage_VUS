@@ -43,8 +43,6 @@ class Processdatabase extends CI_Controller {
 	}
 
 	function get_content_detail($link){
- 
-		//$this->db->query("TRUNCATE baiviet_1");
 		$html = $this->get_content->curl_get($link);
 		$dom_string = str_get_html($html);
 		try {
@@ -88,7 +86,8 @@ class Processdatabase extends CI_Controller {
 		$e= microtime();
 		echo "<h1>Time_process: ".$e-$s."</h1>";
 		return $data;
-	}	
+	}
+
 	/**
 	 * Lấy dữ liệu các trang chính đổ vào csdl
 	 * http://dantri.com.vn/chuyen-la/trang-".$i.".htm

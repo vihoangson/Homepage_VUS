@@ -11,6 +11,7 @@
 		<link href="<?php echo base_url("assets/startbootstrap-modern-business-1.0.2/css/modern-business.css"); ?>" rel="stylesheet">
 		<link href="<?php echo base_url("assets/startbootstrap-modern-business-1.0.2/font-awesome/css/font-awesome.min.css"); ?>" rel="stylesheet">
 		<link href="<?php echo base_url("assets/style/style.css"); ?>" rel="stylesheet">
+		<link href="<?php echo base_url("assets/style/video.css"); ?>" rel="stylesheet">
 		<link href="<?php echo base_url("assets/syntaxhighlighter/styles/shCore.css"); ?>" rel="stylesheet">
 		<link href="<?php echo base_url("assets/syntaxhighlighter/styles/shCoreDefault.css"); ?>" rel="stylesheet">
 		

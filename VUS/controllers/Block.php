@@ -86,6 +86,7 @@ class Block extends CI_Controller {
 			$this->config->title_page=$row->title;
 			$this->load->view('base/header');
 			$this->load->view('block/block_detail',$data);
+			$this->load->view('video/ramdom_video');
 			$this->load->view('block/comment_baiviet',$data_comment);
 			$this->load->view('block/block_footer',$data_new);
 			$this->load->view('base/footer');
@@ -140,6 +141,7 @@ class Block extends CI_Controller {
 		return $return[0]->id;
 	}
 	function do_comment(){
+		return;
 		$content= nl2br($this->input->post("comment"));
 		$align_t=$this->input->post("align_t");
 		$id= $this->get_id_baiviet($align_t);

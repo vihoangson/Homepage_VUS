@@ -16,7 +16,7 @@
 		?></title>
 		<?php 
 		if($this->action->ogimage){
-			echo '<meta property="og:title" content="'.$this->action->ogimage.'" />';
+			echo '<meta property="og:image" content="'.$this->action->ogimage.'" />';
 		}
 		if($this->action->ogtitle){
 			echo '<meta property="og:title" content="'.$this->action->ogtitle.'" />';

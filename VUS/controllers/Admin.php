@@ -2,7 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Admin extends CI_Controller {
 	function __construct() {
-		parent::__construct();	
+		parent::__construct();
+		//$this->action->menu_main["action"] = "Giới thiệu tin tức";
 	}
 
 	function index(){
@@ -18,7 +19,7 @@ class Admin extends CI_Controller {
 		
 		$this->load->view("admin/header");
 		$this->load->view("admin/list_post",$data);
-		$this->load->view("admin/footer");	
+		$this->load->view("admin/footer");
 				
 	}
 	function show_comment(){
@@ -181,5 +182,15 @@ return '
 			echo "<hr><hr>";
 			echo $content;
 		}
+	}
+
+	function videos(){
+		if(isset($_GET["order"])){
+			$this->db->order_by("video_".$_GET["order"], (isset($_GET["order_type"])?isset($_GET["order_type"]):"desc"));
+		}
+		$data = $this->db->get('videos')->result_array();
+		$this->load->view("admin/header");
+		$this->load->view("admin/list_video",array("videos" => $data));
+		$this->load->view("admin/footer");
 	}
 }

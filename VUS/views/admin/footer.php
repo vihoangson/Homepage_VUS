@@ -3,8 +3,7 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="<?php echo base_url(); ?>assets/bootstrap-3.3.2-dist/js/jquery.js"></script>
+
 
     <!-- Bootstrap Core JavaScript -->
     <script src="<?php echo base_url(); ?>assets/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>

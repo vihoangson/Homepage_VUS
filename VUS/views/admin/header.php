@@ -22,7 +22,14 @@
 
 	<!-- Custom Fonts -->
 	<link href="<?php echo base_url(); ?>assets/bootstrap-3.3.2-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <!-- jQuery -->
+    <script src="<?php echo base_url(); ?>assets/jquery.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/lazyload.js"></script>
+    <script>
+		$(function() {
+		    $("img").lazyload();
+		});
+    </script>
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -48,7 +55,18 @@
 						<li><a href="/processdatabase/check_youtube">Kiểm tra video có tồn tại</a></li>
 						<li><a href="http://vus.vnn/Admin/show_comment">Tất cả comment</a></li>
 						<li><a href="http://vus.vnn/Admin/test_getimg">Lưu hình trong bài viết</a></li>
-					</ul> 
+						<li><a href="http://vus.vnn/Admin/getvui1">Lấy tin trang vui1</a></li>
+
+						<li><a href="http://vus.vnn/Admin/videos">Tất cả Video</a></li>
+						<?php 
+						if(isset($this->action->menu_main)){
+							foreach ($this->action->menu_main as $key => $value) {
+								echo '<li><a href="'.$key.'">'.$value.'</a></li>';
+							}
+						}
+
+						?>
+					</ul>
 				</div>
 			</div>
 		</div>

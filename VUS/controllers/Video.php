@@ -21,6 +21,10 @@ class Video extends CI_Controller {
 		}
 		$this->db->where('video_id', $id);
 		$rs = $this->db->get('videos', 1)->row();
+		$this->action->title_page = $rs->video_title;
+		$this->action->ogimage = "http://img.youtube.com/vi/".$rs->video_youtube."/0.jpg";
+		$this->action->ogtitle = $rs->video_title;
+		
 		$this->load->view('base/header');
 		$this->load->view('video/detail_video', array("rs"=>$rs));
 		$this->load->view('base/footer');

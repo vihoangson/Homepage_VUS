@@ -4,7 +4,27 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title><?php if(isset($this->config->title_page))echo $this->config->title_page." - Vus.vn "; else echo "Trang tin tức tổng hợp Vus.vn"; ?></title>
+		<title><?php 
+
+		echo ($this->action->title_page? $this->action->title_page ." | ":""); 
+
+		?><?php 
+		if(isset($this->config->title_page))
+			echo $this->config->title_page." - Vus.vn "; 
+		else 
+			echo "Trang tin tức tổng hợp Vus.vn"; 
+		?></title>
+		<?php 
+		if($this->action->ogimage){
+			echo '<meta property="og:title" content="'.$this->action->ogimage.'" />';
+		}
+		if($this->action->ogtitle){
+			echo '<meta property="og:title" content="'.$this->action->ogtitle.'" />';
+		}
+		 ?>
+		
+		
+
 		<?php if(isset($this->config->header)) echo $this->config->header; ?>
 		<!-- Bootstrap CSS -->
 		<link href="<?php echo base_url("assets/bootstrap-3.3.2-dist/css/bootstrap.min.css"); ?>" rel="stylesheet">

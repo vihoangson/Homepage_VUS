@@ -51,6 +51,32 @@ class Processdatabase extends CI_Controller {
 		}
 	}
 
+	function getvui1(){
+		if(!(isset($_GET["confirm"]) && $_GET["confirm"]=="true")){
+			echo "<div class='text-center'><a href='?confirm=true'>Bạn có chắc thực hiện</a></div>";
+		}
+		$link = "https://vui1.net/trending?page={d}";
+		$dom_image = ".img-wrap img";
+		$dom_title = ".info h1 a";
+		$title = array();
+		$image = array();
+		for($i=1;$i<30;$i++){
+			$l = str_replace("{d}",$i,$link);
+			$html = $this->get_content->curl_get($l);
+			$dom_string = str_get_html($html);
+			foreach ($dom_string->find($dom_image) as $key => $value) {
+				$image[] = $value->src;
+			}
+			foreach ($dom_string->find($dom_title) as $key => $value) {
+				$title[] = $value->innertext;
+			}
+		}
+		echo (json_encode($title));
+		echo (json_encode($image));
+		d($image);
+		dd($title);
+	}
+
 	function get_content_few_website(){
 		$data = $this->prepare_data();
 		foreach ($data as $key => $value) {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // function __construct()
@@ -30,6 +30,23 @@ class Processdatabase extends CI_Controller {
 		}
 	}
 
+	function filter_video(){
+		header("Location:/admin");
+		$data = $this->db->get('videos')->result_array();
+		foreach ($data as $key => $value) {
+			$tmp[$value["video_youtube"]] = $value;
+		}
+		foreach ($tmp as $key => $value) {
+			preg_match("/\d+/",str_replace(".", "", $value["video_views"]),$match);
+			$object = array(
+				"video_title"   => $value["video_title"],
+				"video_youtube" => $value["video_youtube"],
+				"video_views"   => $match[0],
+				);
+			//$this->db->insert('videos', $object);
+		}
+	}
+
 	function check_youtube(){
 		if(!(isset($_GET["confirm"]) && $_GET["confirm"]=="true")){
 			echo "<div class='text-center'><a href='?confirm=true'>Bạn có chắc thực hiện</a></div>";
@@ -49,6 +66,56 @@ class Processdatabase extends CI_Controller {
 		}else{
 			echo "Nothing to do";
 		}
+	}
+
+	function get_xem_vn(){
+		if(!(isset($_GET["confirm"]) && $_GET["confirm"]=="true")){
+			echo "<div class='text-center'><a href='?confirm=true'>Bạn có chắc thực hiện</a></div>";
+		}
+		$link = "http://xem.vn/video/hot/{d}";
+		$title = array();
+		$video = array();
+		$views = array();
+		$string = array();
+		for($i=0;$i<50;$i++){
+			$l = str_replace("{d}",$i,$link);
+			$html = $this->get_content->curl_get($l);
+			$dom_string = str_get_html($html);
+			$var = $dom_string->find(".numbers .views");
+			foreach ($var as $key => $value) {
+				$views[]=($value->innertext);
+			}
+			$var = $dom_string->find(".videoListItem h2 a");
+			foreach ($var as $key => $value) {
+				$title[]=strip_tags($value->innertext);
+			}
+			$var = $dom_string->find("a[data-youtubeid!='']");
+			foreach ($var as $key => $value) {
+				$var2 = $value->attr;
+				$video[] = ($var2["data-youtubeid"]);
+			}
+		}
+		$video = array_unique($video);
+		foreach ($video as $key => $value) {
+			$tmp[$value] = array("video_youtube" =>$value, "video_title"=> $title[$key], "video_views"=>$views[$key]);
+		}
+		$str_video_youtube = implode("','",$video);
+		$this->db->select('video_youtube');
+		$this->db->where('video_youtube in (\''.$str_video_youtube.'\')' );
+		$array_in_db = $this->db->get('videos')->result_array();
+		foreach ($array_in_db as $key => $value) {
+			unset($video[array_search($value["video_youtube"],$video)]);
+		}
+		foreach ($video as $key => $value) {
+			$sql = "insert into videos(video_title,video_youtube,video_views) values(
+'".str_replace("'","",$tmp[$value]["video_title"])."','".$tmp[$value]["video_youtube"]."','(".str_replace(".", "", $tmp[$value]["video_views"]).")'
+				);";
+			$this->db->query($sql);
+
+		}
+		dd("done");
+		d($title);
+		dd($video);
 	}
 
 	function getvui1(){
@@ -138,9 +205,9 @@ class Processdatabase extends CI_Controller {
 	/**
 	 * Lấy dữ liệu các trang chính đổ vào csdl
 	 * http://dantri.com.vn/chuyen-la/trang-".$i.".htm
-	 * 
+	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function get_contet_website_save_to_db($link_cat=""){
 		if(!$link_cat) return;
@@ -182,24 +249,24 @@ class Processdatabase extends CI_Controller {
 		$this->db->where("time_create","");
 		$rs=$this->db->get("baiviet");
 		$time_now=time();
-		foreach ($rs->result() as $row) {    		
+		foreach ($rs->result() as $row) {
 			$time_now=$time_now-9600-rand(200,4600);
 			echo "<h4>".date("d/m/Y h:n:s",$time_now)."</h4>";
 			$sql="update baiviet set time_create='".$time_now."' where id=".$row->id." limit 1 ";
 			echo "<p>".$sql."</p>";
 			if(false)
-					$this->db->query($sql);	    	
-		} 
+					$this->db->query($sql);
+		}
 	}
 
 	function update_content(){
-		$this->load->library('get_link/updategetlink');				
-		$this->updategetlink->update_content();		
+		$this->load->library('get_link/updategetlink');
+		$this->updategetlink->update_content();
 	}
 
 	function get_link(){
 		$this->load->library('get_link/getlink');
-		$this->load->view("base/header");		
+		$this->load->view("base/header");
 		if($this->input->post("testmode")=="false"){
 			$this->getlink->test_mode=false;
 		}
@@ -217,7 +284,7 @@ class Processdatabase extends CI_Controller {
 				$this->getlink->lay_baiviet("dantri");
 				$succ=1;
 				$this->get_first_img(true);
-				break;							
+				break;
 		}
 		if($succ==1){
 			?><div class='alert alert-success'>Đã lưu</div><?php
@@ -228,28 +295,28 @@ class Processdatabase extends CI_Controller {
 					<div>
 						<h4>Test mode</h4>
 						<input type="radio" name="testmode" value="true" checked="checked"> True ||
-						<input type="radio" name="testmode" value="false"> False 						
-					</div>							
+						<input type="radio" name="testmode" value="false"> False
+					</div>
 					<div>
 						<h4>Type</h4>
 						<input type="radio" name="type" value="tuoitrenangdong"> http://tuoitrenangdong.com ||
 						<input type="radio" name="type" value="ifact"> http://ifact.com ||
 						<input type="radio" name="type" value="dantri"> http://dantri.com.vn
 					</div>
-					
+
 					<div><button type="submit" class="btn btn-primary">Get news</button></div>
 					</center>
 			</form>
 			</div>
 			<?php
-			
-		
+
+
 		$this->load->view("base/footer");
 	}
 
 	function view_status(){
 		$this->load->library('get_link/optiongetlink');
-		$this->optiongetlink->view_status();		
+		$this->optiongetlink->view_status();
 	}
 
 
@@ -285,57 +352,57 @@ class Processdatabase extends CI_Controller {
 			$path=explode("?",$value->image);
 			$base_name=basename($path[0]);
 			@file_put_contents("uploads/baiviet/".$base_name, file_get_contents($value->image));
-			@file_put_contents("uploads/baiviet/thumb/small_120x120_".$base_name, file_get_contents($value->image));			
+			@file_put_contents("uploads/baiviet/thumb/small_120x120_".$base_name, file_get_contents($value->image));
 			$array_config["source_image"]="uploads/baiviet/thumb/small_120x120_".$base_name;
 			$array_config["width"]=120;
 			$array_config["height"]=120;
 			$this->image_lib->initialize($array_config);
-			$this->image_lib->resize();			
+			$this->image_lib->resize();
 			$this->image_lib->clear();
 			$this->db->query("update baiviet set local_img='".$base_name."' where id=".$value->id." ");
 
 		}
-	}	
-	public function rebuild_align_title() {    	
+	}
+	public function rebuild_align_title() {
 		if(false) if($_GET["testmode"]!="true"){
 			echo "funtion không hoạt động";
 			return;
 		}
 		$rs=$this->db->get("baiviet");
 		$this->load->helper('rewrite');
-		foreach ($rs->result() as $row) {    		
+		foreach ($rs->result() as $row) {
 			$align_title_new=mod_rewrite(trim($row->title));
 			echo "<h4>".$align_title_new."</h4>";
 			echo "<p>"."update baiviet set align_title='".$align_title_new."' where id=".$row->id." limit 1 "."</p>";
 			if(false)
-					$this->db->query("update baiviet set align_title='".$align_title_new."' where id=".$row->id." limit 1 ");	    	
-		}   
+					$this->db->query("update baiviet set align_title='".$align_title_new."' where id=".$row->id." limit 1 ");
+		}
 	}
-	function rebuild_readmore() {    
+	function rebuild_readmore() {
 		if(false) if($_GET["testmode"]!="true"){
 			echo "funtion không hoạt động";
 			return;
-		}		
-		
-		$rs=$this->db->get("baiviet");		
-		foreach ($rs->result() as $row) {    		
+		}
+
+		$rs=$this->db->get("baiviet");
+		foreach ($rs->result() as $row) {
 			$readmore_new=word_limiter(trim($row->readmore));
 			echo "<h4>".$readmore_new."</h4>";
 			echo "<p>"."update baiviet set readmore='".$readmore_new."' where id=".$row->id." limit 1 "."</p>";
 			if(true)
-					$this->db->query("update baiviet set readmore='".$readmore_new."' where id=".$row->id." limit 1 ");	    	
-		}  
-	}	
+					$this->db->query("update baiviet set readmore='".$readmore_new."' where id=".$row->id." limit 1 ");
+		}
+	}
 	function show_controller(){
 		if(false) if($_GET["testmode"]!="true"){
 			echo "funtion không hoạt động";
 			return;
-		}		
+		}
 		$controllers = array();
 		$this->load->helper('file');
 
 		// Scan files in the /application/controllers directory
-		// Set the second param to TRUE or remove it if you 
+		// Set the second param to TRUE or remove it if you
 		// don't have controllers in sub directories
 		$files = get_dir_file_info(APPPATH.'controllers', FALSE);
 
@@ -343,13 +410,13 @@ class Processdatabase extends CI_Controller {
 		foreach (array_keys($files) as $file)
 		{
 			$controllers[] = str_replace(".php", '', $file);
-			$controllers=array_diff($controllers, array("index.html") );		
+			$controllers=array_diff($controllers, array("index.html") );
 		}
 		foreach ($controllers as $key => $value) {
 			echo "<p><a href='".base_url("index.php/".$value."")."'>".$value."</a></p>";
 		}
 	}
-	
+
 
 
 /*
@@ -371,10 +438,10 @@ class Processdatabase extends CI_Controller {
 			$array_config["height"]=$size;
 			$this->image_lib->clear();
 			$this->image_lib->initialize($array_config);
-			$this->image_lib->resize();			
-			//$this->db->query("update baiviet set local_img='".$basename."' where id=".$value->id." ");		
+			$this->image_lib->resize();
+			//$this->db->query("update baiviet set local_img='".$basename."' where id=".$value->id." ");
 		}
 	}
-	
+
 }
  ?>

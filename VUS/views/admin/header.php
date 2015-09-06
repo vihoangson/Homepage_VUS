@@ -55,9 +55,10 @@
 						<li><a href="/processdatabase/check_youtube">Kiểm tra video có tồn tại</a></li>
 						<li><a href="http://vus.vnn/Admin/show_comment">Tất cả comment</a></li>
 						<li><a href="http://vus.vnn/Admin/test_getimg">Lưu hình trong bài viết</a></li>
-						<li><a href="http://vus.vnn/Admin/getvui1">Lấy tin trang vui1</a></li>
-
-						<li><a href="http://vus.vnn/Admin/videos">Tất cả Video</a></li>
+						<li><a href="http://vus.vnn/processdatabase/getvui1">Lấy tin trang vui1</a></li>
+						<li><a href="http://vus.vnn/processdatabase/get_xem_vn">Lấy tin trang xem.vn</a></li>
+						<li><a href="http://vus.vnn/processdatabase/filter_video">Xóa video trùng</a></li>
+						<li><a href="http://vus.vnn/processdatabase/get_xem_vn">get_xem_vn</a></li>
 						<?php 
 						if(isset($this->action->menu_main)){
 							foreach ($this->action->menu_main as $key => $value) {

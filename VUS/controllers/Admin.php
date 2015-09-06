@@ -13,12 +13,12 @@ class Admin extends CI_Controller {
 	}
 	function show_post(){
 		$this->db->order_by("id","desc");
-		$this->db->limit(10);
+		$this->db->limit(60);
 		$data["list_post"]=$this->db->get("baiviet")->result();
 		
-		$this->load->view("base/header");
+		$this->load->view("admin/header");
 		$this->load->view("admin/list_post",$data);
-		$this->load->view("base/footer");	
+		$this->load->view("admin/footer");	
 				
 	}
 	function show_comment(){
@@ -166,6 +166,9 @@ return '
 	* test class get img automatic
 	*/
 	function test_getimg(){
+		if(!(isset($_GET["confirm"]) && $_GET["confirm"]=="true")){
+			echo "<div class='text-center'><a href='?confirm=true'>Bạn có chắc thực hiện</a></div>";
+		}
 		$this->db->limit(1);
 		$content_p=$this->db->get("baiviet")->result();
 		$this->load->model("Admin_model");				

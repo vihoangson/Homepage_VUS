@@ -7,7 +7,7 @@ class Video extends CI_Controller {
 	{
 		echo $this->load->view('base/header',null,true);
 		$this->db->order_by('RAND()');
-		$array_video = $this->db->get('videos',20)->result_array();
+		$array_video = $this->db->get('videos',24)->result_array();
 		foreach ($array_video as $key => $value) {
 			echo $this->load->view('block/block_ele_video',$value,true);
 		}

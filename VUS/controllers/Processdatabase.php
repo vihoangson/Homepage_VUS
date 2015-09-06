@@ -30,6 +30,27 @@ class Processdatabase extends CI_Controller {
 		}
 	}
 
+	function check_youtube(){
+		if(!(isset($_GET["confirm"]) && $_GET["confirm"]=="true")){
+			echo "<div class='text-center'><a href='?confirm=true'>Bạn có chắc thực hiện</a></div>";
+		}
+		$data = $this->db->get('videos')->result_array();
+		$delete_video = array();
+		foreach ($data as $key => $value) {
+			if(!@getimagesize("http://img.youtube.com/vi/".$value["video_youtube"]."/0.jpg")	){
+				$delete_video[] = $value["video_youtube"];
+			}
+		}
+		if(is_array($delete_video)){
+			$this->db->where('video_youtube in ' ."('".implode("','",$delete_video)."')" );
+			$this->db->delete('videos');
+			echo "<h1>Deleted !</h1>";
+			dd($delete_video);
+		}else{
+			echo "Nothing to do";
+		}
+	}
+
 	function get_content_few_website(){
 		$data = $this->prepare_data();
 		foreach ($data as $key => $value) {

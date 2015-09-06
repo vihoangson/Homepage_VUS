@@ -38,7 +38,6 @@ class Get_img_in_content
 			}
 			$filename=mod_rewrite($title)."_".$i.".".$type;
 			if(!file_put_contents($this->dir."/".$filename, $file)) {
-
 				continue;
 			}else{
 				$i++;

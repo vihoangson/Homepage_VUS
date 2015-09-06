@@ -6,11 +6,12 @@
 			<!-- Blog Entries Column -->
 			<div class="col-md-12">
 <?php
+if(false)
 foreach ($data_page as $row) {
 	$data["data_ele"]=$row;
 	$this->load->view('block/block_cat_ele', $data);
 }
-echo "<div class='pagination_box'>".$pagination."</div>";
+//echo "<div class='pagination_box'>".$pagination."</div>";
  ?>
 			</div>
 			<!-- Blog Sidebar Widgets Column -->

@@ -59,6 +59,8 @@
 						<li><a href="http://vus.vnn/processdatabase/get_xem_vn">Lấy tin trang xem.vn</a></li>
 						<li><a href="http://vus.vnn/processdatabase/filter_video">Xóa video trùng</a></li>
 						<li><a href="http://vus.vnn/processdatabase/get_xem_vn">get_xem_vn</a></li>
+						<li><a href="http://vus.vnn/admin/videos">Quản lý video</a></li>
+						
 						<?php 
 						if(isset($this->action->menu_main)){
 							foreach ($this->action->menu_main as $key => $value) {

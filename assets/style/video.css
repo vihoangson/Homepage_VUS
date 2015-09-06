@@ -23,3 +23,13 @@
 .ele_video img {
 	width: 100%;
 }
+.video_nav h3 {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.video_nav img {
+    float: left;
+    width: 94px;
+    margin-right: 6px;
+}

@@ -1,7 +1,15 @@
 		</div>
 		<div class="col-md-3">
-			<br>
-			<div class="panel panel-info">
+			<div class="row video_home">
+				<?php
+					$this->db->order_by('RAND()');
+					$array_video = $this->db->get('videos',12)->result_array();
+					foreach ($array_video as $key => $value) {
+						$this->load->view('block/block_ele_video_nav',$value);
+					}
+				?>
+			</div>
+			<div class="panel panel-info" style="display:none;">
 				  <div class="panel-heading">
 						<h3 class="panel-title">Catelogy</h3>
 				  </div>

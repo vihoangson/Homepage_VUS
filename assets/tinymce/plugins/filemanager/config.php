@@ -18,9 +18,10 @@ $root = rtrim($_SERVER['DOCUMENT_ROOT'],'/'); // don't touch this configuration
 
 //$base_url="http://bb.cty.vn"; //url base of site if you want only relative url leave empty
 
-$base_url="http://".$_SERVER['SERVER_NAME']; //url base of site if you want only relative url leave empty
-$upload_dir = '/uploads/userfiles/'; // path from base_url to upload base dir
-$current_path = '../../../uploads/userfiles/'; // relative path from filemanager folder to upload files folder
+//$base_url="http://".$_SERVER['SERVER_NAME']; //url base of site if you want only relative url leave empty
+$base_url=""; //url base of site if you want only relative url leave empty
+$upload_dir = '/uploads/img/'; // path from base_url to upload base dir
+$current_path = '../../../../uploads/img'; // relative path from filemanager folder to upload files folder
 
 $MaxSizeUpload=100; //Mb
 
@@ -37,7 +38,7 @@ $image_max_height=0;
 //Automatic resizing //
 //If you set true $image_resizing the script convert all images uploaded in image_width x image_height resolution
 //If you set width or height to 0 the script calcolate automatically the other size
-$image_resizing=false;
+$image_resizing=true;
 $image_width=600;
 $image_height=0;
 

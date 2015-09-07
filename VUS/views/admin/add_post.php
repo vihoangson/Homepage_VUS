@@ -15,9 +15,7 @@ $array_option_img=array("default_img_php","default_img_normal");
 					foreach ($rs as $key => $value) {
 						echo '<option value="'.$value->cid.'"> '.$value->title.'</option>';
 					}
-					
 					?>
-					
 			</select></p>
 	<textarea name="hometext" class="input_text_vihan" style="width:100%; height:100px;"></textarea>
 	<button class="btn bnt-primary" type="submit">Save post</button>

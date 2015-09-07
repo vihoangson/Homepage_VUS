@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 session_start();
 $_SESSION["verify"] = "FileManager4TinyMCE";
@@ -27,13 +27,13 @@ $subfolder = '';
 if(isset($_GET['subfolder']) && !empty($_GET['subfolder'])) {
     if($_GET['subfolder'] != "undefined") $subfolder = $_GET['subfolder'];
     $cur_dir = $upload_dir . $subfolder . '/' . $subdir;
-    $cur_path = $current_path . $subfolder .'/'. $subdir;
+    $cur_path = $current_path . $subfolder .'/'. $subdir."";
     $thumbs_path = 'thumbs/' . $subfolder . '/';
     if (!file_exists($thumbs_path.$subdir)) create_folder(false,$thumbs_path.$subdir);
 }
 else {
     $cur_dir = $upload_dir . $subdir;
-    $cur_path = $current_path . $subdir;
+    $cur_path = $current_path ."/". $subdir;
     $thumbs_path = 'thumbs/';
 }
 

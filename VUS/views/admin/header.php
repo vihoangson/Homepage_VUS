@@ -50,16 +50,16 @@
 				 </div>
 				<div class="panel-body">
 					<ul>
-						<li><a href="http://vus.vnn/Admin/show_post">Tất cả bài viết</a></li>
-						<li><a href="http://vus.vnn/Admin/add_post">Thêm bài viết</a></li>
+						<li><a href="/Admin/show_post">Tất cả bài viết</a></li>
+						<li><a href="/Admin/add_post">Thêm bài viết</a></li>
 						<li><a href="/processdatabase/check_youtube">Kiểm tra video có tồn tại</a></li>
-						<li><a href="http://vus.vnn/Admin/show_comment">Tất cả comment</a></li>
-						<li><a href="http://vus.vnn/Admin/test_getimg">Lưu hình trong bài viết</a></li>
-						<li><a href="http://vus.vnn/processdatabase/getvui1">Lấy tin trang vui1</a></li>
-						<li><a href="http://vus.vnn/processdatabase/get_xem_vn">Lấy tin trang xem.vn</a></li>
-						<li><a href="http://vus.vnn/processdatabase/filter_video">Xóa video trùng</a></li>
-						<li><a href="http://vus.vnn/processdatabase/get_xem_vn">get_xem_vn</a></li>
-						<li><a href="http://vus.vnn/admin/videos">Quản lý video</a></li>
+						<li><a href="/Admin/show_comment">Tất cả comment</a></li>
+						<li><a href="/Admin/test_getimg">Lưu hình trong bài viết</a></li>
+						<li><a href="/processdatabase/getvui1">Lấy tin trang vui1</a></li>
+						<li><a href="/processdatabase/get_xem_vn">Lấy tin trang xem.vn</a></li>
+						<li><a href="/processdatabase/filter_video">Xóa video trùng</a></li>
+						<li><a href="/processdatabase/get_xem_vn">get_xem_vn</a></li>
+						<li><a href="/admin/videos">Quản lý video</a></li>
 						
 						<?php 
 						if(isset($this->action->menu_main)){

@@ -140,3 +140,6 @@ line-height: 22px;
   color: #3713be;
   padding: 10px;
 }
+#hometext_ifr {
+    width: 99% !important;
+}

@@ -58,14 +58,14 @@ $this->config->footer.='<script src="'.base_url().'assets/script/filter_table.js
 		$this->load->view("base/footer");	
 	}
 	function do_save(){
-		$cid= $this->input->post("cid");
-		$title= $this->input->post("title");
-		$image= $this->input->post("image");
-		$content=$this->input->post("hometext");
+		$cid		= $this->input->post("cid");
+		$title		= $this->input->post("title");
+		$image		= $this->input->post("image");
+		$content	=$this->input->post("hometext");
 		$this->load->model("Admin_model");	
 		if($this->config->item("save_img_auto"))
-		$content=$this->Admin_model->getimg->do_get_img_from_content(array($title,$content));
-		$content= mysql_real_escape_string($content) ;
+		$content = $this->Admin_model->getimg->do_get_img_from_content(array($title,$content));
+		$content = mysql_real_escape_string($content) ;
 
 		
 		
